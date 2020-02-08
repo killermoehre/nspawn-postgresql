@@ -11,6 +11,6 @@ jobs:
       - name: Create Image
         run: |
           sudo dnf install mkosi pacman zypper apt
-          ls -la $GITHUB_WORKSPACE/
+          tree $GITHUB_WORKSPACE/
           sudo mkosi -C $GITHUB_WORKSPACE/ --force build
           tree $GITHUB_WORKSPACE/
