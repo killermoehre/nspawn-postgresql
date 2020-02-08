@@ -4,13 +4,13 @@ on: [push]
 jobs:
   build:
     name: Build Image
-    runs-on: ubuntu-latest
+    container: fedora:latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Install Dependencies
-        run: sudo apt install git python3
-      - name: Install mkosi
-        run: git clone https://github.com/systemd/mkosi.git
-      - name: Build Image
-        run: sudo python3 ./mkosi/mkosi -C $GITHUB_WORKSPACE/ --force
+      - name: Create Image
+        run: |
+          sudo dnf install mkosi pacman zypper apt
+          ls -la $GITHUB_WORKSPACE/
+          sudo mkosi -C $GITHUB_WORKSPACE/ --force build
+          tree $GITHUB_WORKSPACE/
