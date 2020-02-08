@@ -9,7 +9,7 @@ jobs:
       volumes:
         - mkosi_cache:${{ github.workspace }}/mkosi.cache
         - mkosi_output:${{ github.workspace  }}/mkosi.output
-      options: --cap-add ALL
+      options: --cap-add ALL --privileged
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
