@@ -4,19 +4,13 @@ on: [push]
 jobs:
   build:
     name: Build Image
-    container:
-      image: fedora:latest
-      volumes:
-        - mkosi_cache:${{ github.workspace }}/mkosi.cache
-        - mkosi_output:${{ github.workspace  }}/mkosi.output
-      options: --cap-add ALL --privileged
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Create Image
-        run: |
-          sudo dnf --assumeyes install mkosi pacman zypper apt
-          ls -laR $GITHUB_WORKSPACE/
-          sudo mkosi -C $GITHUB_WORKSPACE/ --force build
-          ls -laR $GITHUB_WORKSPACE/
+      - name: Install mkosi
+        env:
+          DEBIAN_FRONTEND=noninteractive
+        run: sudo apt-get install -y --force-yes mkosi
+      - name: Build image
+        run: sudo mkosi -C $GITHUB_WORKSPACE/ --force build
