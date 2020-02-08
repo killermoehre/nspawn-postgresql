@@ -8,7 +8,8 @@ jobs:
       image: fedora:latest
       volumes:
         - mkosi_cache:${{ github.workspace }}/mkosi.cache
-        - mkosi_output:${{ github.workspace }}/mkosi.output
+        - mkosi_output:${{ github.workspace  }}/mkosi.output
+      options: --cap-add SYS_ADMIN
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
