@@ -4,7 +4,11 @@ on: [push]
 jobs:
   build:
     name: Build Image
-    container: fedora:latest
+    container:
+      image: fedora:latest
+      volumes:
+        - mkosi_cache:${{ github.workspace }}/mkosi.cache
+        - mkosi_output:${{ github.workspace }}/mkosi.output
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
