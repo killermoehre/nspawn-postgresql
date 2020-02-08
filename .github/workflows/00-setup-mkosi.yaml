@@ -11,7 +11,7 @@ jobs:
       - name: Update System
         run: |
           sudo apt update
-          auso apt upgrade
+          sudo apt upgrade
       - name: Install Dependencies
         run: sudo apt install git python3
       - name: Install mkosi
