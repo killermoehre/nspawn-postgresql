@@ -5,6 +5,7 @@ jobs:
   build:
     name: Build Image
     container: fedora:latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
