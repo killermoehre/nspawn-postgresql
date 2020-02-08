@@ -1,37 +1,20 @@
 ---
 name: Build Image
-on:
-  push:
-    paths-ignore:
-      - "README.md"
-      - "LICENSE"
-      - ".git*"
+on: [push]
 jobs:
-  fetch_repository:
-    name: Fetch Repository
-    uses: actions/checkout@v2
-  update_system:
-    name: Update System
+  build:
+    name: Build Image
     runs-on: ubuntu-latest
     steps:
-      run: |
-        apt update
-        apt upgrade
-  install_dependencies:
-    name: Install dependencies
-    needs: update-system
-    runs-on: ubuntu-latest
-    steps:
-      run: apt install git python3
-  install_mkosi:
-    name: Install mkosi
-    needs: install_dependencies
-    runs-on: ubuntu-latest
-    steps:
-      run: git clone https://github.com/systemd/mkosi.git
-  build_image:
-    name: Build Image with mkosi
-    needs: install_mkosi
-    runs-on: ubuntu-latest
-    steps:
-      run: /usr/bin/python3 ./mkosi/mkosi -C $GITHUB_WORKSPACE/ --force
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Update System
+        run: |
+          apt update
+          apt upgrade
+      - name: Install Dependencies
+        run: apt install git python3
+      - name: Install mkosi
+        run: git clone https://github.com/systemd/mkosi.git
+      - name: Build Image
+        run: /usr/bin/python3 ./mkosi/mkosi -C $GITHUB_WORKSPACE/ --force
