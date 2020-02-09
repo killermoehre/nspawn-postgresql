@@ -8,4 +8,7 @@ Bootable=yes
 Output=fedora.raw
 
 [Packages]
-Packages=systemd postgresql-server postgresql-contrib
+Packages=
+        systemd
+        postgresql-server
+        postgresql-contrib
