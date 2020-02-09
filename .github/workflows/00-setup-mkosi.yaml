@@ -6,6 +6,18 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
     steps:
+      - name: Download rpm
+        uses: actions/checkout@v2
+        with:
+          repository: rpm-software-management/rpm
+          ref: rpm-4.15.x
+          path: rpm
+      - name: Install rpm
+        working-directory: ${{ github.workspace }}/rpm
+        run: |
+          ./autogen.sh --enable-python --with-cap --with-acl
+          make
+          sudo make install
       - name: Download dnf
         uses: actions/checkout@v2
         with:
