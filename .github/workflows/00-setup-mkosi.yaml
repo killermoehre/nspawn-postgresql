@@ -14,8 +14,7 @@ jobs:
         run: |
           declare -a packages
           while read -r status package _; do if [[ "$status" == "ii" ]]; then packages+=("$package"); fi; done < <(dpkg-query -l)
-          echo "${packages[@]}"
-          exit 1
+          sudo apt-get --assume-yes purge "${packages[@]}"
           sudo apt-get --assume-yes update
           sudo apt-get --assume-yes dist-upgrade
       - name: Install mkosi
