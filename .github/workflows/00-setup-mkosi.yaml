@@ -6,28 +6,39 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
     steps:
+      - name: Download dnf
+        uses: actions/checkout@v2
+        with:
+          repository: rpm-software-management/dnf
+          ref: 4.2.18
+          path: dnf
+      - name: Install dnf
+        working-directory: ${{ github.workspace }}/dnf
+        run: |
+          mkdir build
+          pushd build
+          cmake -DPYTHON_DESIRED=3 ..
+          make
+          sudo make install
+          popd
+      - name: Download mkosi
+        uses: actions/checkout@v2
+        with:
+          repository: systemd/mkosi
+          ref: v5
+          path: mkosi
+      - name: Install mkosi
+        working-directory: ${{ github.workspace }}/mkosi
+        run: sudo python3 setup.py install
+      - name: Cache packages
+        id: package-cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ github.workspace }}/image-definition/mkosi.cache
+          key: mkosi-cache
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Update machine
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          declare -a packages=()
-          declare -a essential_packages=()
-          apt-cache depends --recurse --important --installed apt
-          apt-cache depends --recurse --important --installed --quiet apt
-          apt-cache depends --recurse --important --installed --quiet=2 apt
-          while read -r package essential; do
-            if [[ "$essential" == 'yes' ]]; then
-              essential_packages+=("$package")
-            fi
-          done < <(dpkg-query -Wf '${Package} ${Essential}\n')
-          sudo apt-get --assume-yes purge "${packages[@]}"
-          sudo apt-get --assume-yes update
-          sudo apt-get --assume-yes dist-upgrade
-      - name: Install mkosi
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: sudo apt-get --assume-yes install mkosi yum
+        with:
+          path: image-definition
       - name: Build image
-        run: sudo mkosi -C $GITHUB_WORKSPACE/ --force build
+        run: sudo mkosi -C "$GITHUB_WORKSPACE/image-definition" --force build
