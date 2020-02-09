@@ -27,7 +27,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: systemd/mkosi
-          ref: v5
           path: mkosi
       - name: Install python-setuptools
         run: sudo pip3 install setuptools
