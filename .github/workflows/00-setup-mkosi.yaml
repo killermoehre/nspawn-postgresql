@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir build
           pushd build
-          cmake -DPYTHON_DESIRED=3 ..
+          cmake -DPYTHON_DESIRED=3 -DWITH_MAN=0 ..
           make
           sudo make install
           popd
