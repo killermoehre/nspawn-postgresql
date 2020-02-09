@@ -20,6 +20,8 @@ jobs:
           cmake -DPYTHON_DESIRED=3 -DWITH_MAN=0 ..
           make
           sudo make install
+          sudo ln -s /usr/local/bin/dnf-3 /usr/local/bin/dnf
+          sudo ln -s /usr/local/bin/dnf-automatic-3 /usr/local/bin/dnf-automatic
           popd
       - name: Download mkosi
         uses: actions/checkout@v2
@@ -27,6 +29,8 @@ jobs:
           repository: systemd/mkosi
           ref: v5
           path: mkosi
+      - name: Install python-setuptools
+        run: sudo pip3 install setuptools
       - name: Install mkosi
         working-directory: ${{ github.workspace }}/mkosi
         run: sudo python3 setup.py install
