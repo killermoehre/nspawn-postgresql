@@ -13,7 +13,7 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           declare -a packages=()
-          while read -r package essential; do if [[ "$essential" != 'yes' ]]: then packages+=("$package"); fi; done < <(dpkg-query -Wf '${Package} ${Essential}\n')
+          while read -r package essential; do if [[ "$essential" != 'yes' ]]; then packages+=("$package"); fi; done < <(dpkg-query -Wf '${Package} ${Essential}\n')
           sudo apt-get --assume-yes purge "${packages[@]}"
           sudo apt-get --assume-yes update
           sudo apt-get --assume-yes dist-upgrade
