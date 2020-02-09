@@ -6,6 +6,8 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
     steps:
+      - name: Install autopoint (apt)
+        run: sudo apt-get -y install autopoint
       - name: Download rpm
         uses: actions/checkout@v2
         with:
