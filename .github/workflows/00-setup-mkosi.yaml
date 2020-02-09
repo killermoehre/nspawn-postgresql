@@ -12,8 +12,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          dpkg-query -l
-          sudo apt-get purge $(dpkg-query -l)
+          sudo dpkg -r '*'
           sudo apt-get --assume-yes update
           sudo apt-get --assume-yes dist-upgrade
       - name: Install mkosi
