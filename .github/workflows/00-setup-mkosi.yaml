@@ -6,8 +6,8 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
     steps:
-      - name: Install autopoint (apt)
-        run: sudo apt-get -y install autopoint
+      - name: Install rpm dependencies (apt)
+        run: sudo apt-get -y install autopoint libnss3-dev
       - name: Download rpm
         uses: actions/checkout@v2
         with:
