@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install rpm dependencies (apt)
-        run: sudo apt-get -y install autopoint libnss3-dev
+        run: sudo apt-get -y install autopoint libnss3-dev libpopt-dev
       - name: Download rpm
         uses: actions/checkout@v2
         with:
