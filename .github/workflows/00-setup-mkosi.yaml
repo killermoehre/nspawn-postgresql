@@ -58,4 +58,4 @@ jobs:
         with:
           path: image-definition
       - name: Build image
-        run: sudo mkosi -C "$GITHUB_WORKSPACE/image-definition" --force build
+        run: sudo mkosi -C "$GITHUB_WORKSPACE/image-definition" --force build 2>&1
