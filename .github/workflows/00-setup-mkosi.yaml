@@ -17,7 +17,7 @@ jobs:
       - name: Install rpm
         working-directory: ${{ github.workspace }}/rpm
         run: |
-          ./autogen.sh --enable-python --enable-bdb=auto
+          ./autogen.sh --enable-python --enable-bdb=auto --without-lua
           make
           sudo make install
       - name: Download dnf
